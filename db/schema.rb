@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_171401) do
+ActiveRecord::Schema.define(version: 2020_08_09_182731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 2020_08_06_171401) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "dream_symbols", force: :cascade do |t|
+    t.string "name"
+    t.text "meaning"
+    t.bigint "dictionary_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dictionary_id"], name: "index_dream_symbols_on_dictionary_id"
   end
 
   create_table "entries", force: :cascade do |t|
@@ -32,22 +41,18 @@ ActiveRecord::Schema.define(version: 2020_08_06_171401) do
   end
 
   create_table "entry_themes", force: :cascade do |t|
-    t.string "name"
     t.bigint "entry_id", null: false
+    t.bigint "theme_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["entry_id"], name: "index_entry_themes_on_entry_id"
+    t.index ["theme_id"], name: "index_entry_themes_on_theme_id"
   end
 
-  create_table "symbols", force: :cascade do |t|
+  create_table "themes", force: :cascade do |t|
     t.string "name"
-    t.string "meaning"
-    t.bigint "dictionary_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["dictionary_id"], name: "index_symbols_on_dictionary_id"
-    t.index ["user_id"], name: "index_symbols_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -60,8 +65,8 @@ ActiveRecord::Schema.define(version: 2020_08_06_171401) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "dream_symbols", "dictionaries"
   add_foreign_key "entries", "users"
   add_foreign_key "entry_themes", "entries"
-  add_foreign_key "symbols", "dictionaries"
-  add_foreign_key "symbols", "users"
+  add_foreign_key "entry_themes", "themes"
 end

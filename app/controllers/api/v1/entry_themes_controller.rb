@@ -3,26 +3,26 @@ class Api::V1::EntryThemesController < ApplicationController
 
     def index
         entry_themes = EntryTheme.all
-        render json: entry_themes
+        render json: entry_themes, status: 200
     end
     
     def show
-        render json: @entry_theme
+        render json: @entry_theme, status: 200
     end
 
     def create
         entry_theme = EntryTheme.create!(entry_theme_params)
-        render json: entry_theme
+        render json: entry_theme, status: 200
     end
 
     def update
         @entry_theme.update!(entry_theme_params)
-        render json: @entry_theme
+        render json: @entry_theme, status: 200
     end
 
     def destroy
         @entry_theme.destroy!
-        render json: {}
+        render json: {}, status: 200
     end
     
 
@@ -33,6 +33,6 @@ class Api::V1::EntryThemesController < ApplicationController
     end
 
     def entry_theme_params
-        params.permit(:name, :defnition, :user_id, :dictionary_id)
+        params.permit(:name, :defnition, :entry_id, :theme_id)
     end
 end

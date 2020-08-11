@@ -3,36 +3,31 @@ class Api::V1::UsersController < ApplicationController
 
     def index
         users = User.all
-        render json: users
+        render json: users, status: 200
     end
 
-    def login
+    def check_login
         @user = User.find_by(username: params[:username])
-        render json: @user
+        render json: @user, status: 200
     end
     
     def show
-        render json: @user.to_json(:include => {
-            :entries => {:include => :entry_themes},
-            :symbols => {:include => :dictionary}
-        })
+        render json: @user, status: 200
     end
 
     def create
         user = User.create!(user_params)
-
-        render json: user
+        render json: user, status: 200
     end
 
     def update
         @user.update!(user_params)
-
-        render json: user
+        render json: @user, status: 200
     end
 
     def destroy
         @user.destroy!
-        render json: {}
+        render json: {}, status: 200
     end
     
 
@@ -43,6 +38,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def user_params
-        params.permit(:first_name, :last_name, :username, :password, :password_confirmation)
+        params.require(:user).permit(:first_name, :last_name, :username, :password, :password_confirmation)
     end
 end

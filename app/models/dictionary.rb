@@ -1,4 +1,3 @@
 class Dictionary < ApplicationRecord
-    has_many :symbols
-    has_many :users, through: :symbols
+    has_many :dream_symbols
 end

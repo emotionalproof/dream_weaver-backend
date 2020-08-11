@@ -3,26 +3,26 @@ class Api::V1::EntriesController < ApplicationController
 
     def index
         entries = Entry.all
-        render json: entrys
+        render json: entrys, status: 200
     end
     
     def show
-        render json: @entry
+        render json: @entry, status: 200
     end
 
     def create
         entry = Entry.create!(entry_params)
-        render json: entry
+        render json: entry, status: 200
     end
 
     def update
         @entry.update!(entry_params)
-        render json: @entry
+        render json: @entry, status: 200
     end
 
     def destroy
         @entry.destroy!
-        render json: {}
+        render json: {}, status: 200
     end
     
 
