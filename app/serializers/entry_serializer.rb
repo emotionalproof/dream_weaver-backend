@@ -1,7 +1,14 @@
 class EntrySerializer < ActiveModel::Serializer
-  attributes :id, :date, :title, :interpretation, :user_id
+  attributes :id, :date, :title, :description, :interpretation, :user_id
   belongs_to :user
-  has_many :entry_themes
+end
 
+
+class UserSerializer < ActiveModel::Serializer
+  has_many :entries
+
+  class EntrySerializer < ActiveModel::Serializer
+    attributes :id, :date, :title, :description, :interpretation
+  end
   
 end
