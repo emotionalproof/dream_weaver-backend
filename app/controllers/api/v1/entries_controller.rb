@@ -33,6 +33,6 @@ class Api::V1::EntriesController < ApplicationController
     end
 
     def entry_params
-        params.permit(:date, :title, :description, :interpretation, :user_id)
+        params.require(:entry).permit(:date, :title, :description, :interpretation, :id, :user_id)
     end
 end
