@@ -15,6 +15,10 @@ class Api::V1::DreamSymbolsController < ApplicationController
         render json: dream_symbol, status: 200
     end
 
+    def random
+        render json: DreamSymbol.random
+    end
+
     def update
         @dream_symbol.update!(dream_symbol_params)
         render json: @dream_symbol, status: 200
